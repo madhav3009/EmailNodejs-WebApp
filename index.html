@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>NodeJS Email application</title>
+<style>
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+body {
+  background: linear-gradient(to left, #ff00aa, rgb(255, 0, 0));
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;      
+}
+
+.container {
+  position: relative;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+#newform {
+  position: relative;
+  background: #FFFFFF;
+  max-width: 360px;
+  margin: 2rem auto 10px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+#newform input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+
+}
+#newform button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: rgb(255, 0, 106);
+  width: 100%;
+  border: 0;
+  padding: 10px;
+  margin-top:5% ;
+  color: #FFFFFF;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  margin-bottom: 2%;
+}
+#newform button:hover,#newform button:active,#newform button:focus {
+  background: rgb(0, 0, 0);
+}
+#content{border:1px solid rgb(218, 213, 216);padding:5px;font-size: large;color:black;font-family:sans-serif;word-spacing: 2px;}
+
+</style>
+
+</head>
+
+<body>
+<div class="container">
+    <div id="newform">
+    <h1>E-Mailer</h1>
+    <input  id="from" type="email" placeholder="chetanbhargav0099@gmail.com"  disabled/>
+    <input  id="to" type="email" placeholder="Enter E-mail ID where you want to send"  required/>
+    <input id="subject" type="text" placeholder="Write Subject" required />
+    <textarea id="content" cols="35" rows="5" placeholder="Write what you want to send " required></textarea>
+    <button id="send_email">Send Email</button>
+    <span id="message"></span>
+    </div>
+</div>
+</body>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script>
+
+    $(document).ready(function(){
+        var from,to,subject,text;
+       
+        $("#send_email").click(function(){     
+            from=$("#from").val();
+            to=$("#to").val();
+            subject=$("#subject").val();
+            text=$("#content").val();
+
+            $("#message").text("Sending E-mail...Please wait");
+            $.get("http://localhost:3001/send",{to:to,subject:subject,text:text},function(data){
+            if(data=="sent")
+            {
+                $("#message").empty().html("Email is been sent at "+to )
+                
+            }});
+        });
+    });
+ </script>
